@@ -1,0 +1,7 @@
+# secrets
+secrets/
+
+# debugging log files
+*.log
+models
+models--roberta-base

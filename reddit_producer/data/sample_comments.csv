@@ -1,0 +1,4 @@
+id,author,body,subreddit,upvotes,timestamp
+test1,user_test,This is a sample message!,AskReddit,10,1731755100
+test2,user_test2,Pipeline test OK!,funny,4,1731755200
+test3,user_test3,Hello Spark + Kafka!,gaming,8,1731755300

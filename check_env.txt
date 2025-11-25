@@ -1,0 +1,30 @@
+=======================================
+🔍 SYSTEM ENVIRONMENT REPORT
+Generated on: Sun 09 Nov 2025 06:26:05 PM +07
+=======================================
+
+🖥️  Operating System:
+Description:	Ubuntu 20.04.6 LTS
+
+⚙️  CPU Info:
+CPU(s):                             16
+On-line CPU(s) list:                0-15
+Model name:                         Intel(R) Xeon(R) Silver 4116 CPU @ 2.10GHz
+NUMA node0 CPU(s):                  0-15
+
+💾 RAM Info:
+Mem:           70Gi       9.8Gi        13Gi       7.1Gi        47Gi        52Gi
+
+🎮 GPU Info:
+00:0f.0 VGA compatible controller: VMware SVGA II Adapter
+
+🐳 Docker Version:
+Docker version 28.0.1, build 068a01e
+
+☸️  Minikube Version:
+
+🏗️  Terraform Version:
+
+=======================================
+✅ Check completed successfully.
+File generated: /root/ai/hiep/cnn/reddit-streaming-pipeline/check_env.txt
