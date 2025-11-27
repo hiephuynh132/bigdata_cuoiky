@@ -3,10 +3,7 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": {
-          "type": "grafana",
-          "uid": "-- Grafana --"
-        },
+        "datasource": { "type": "grafana", "uid": "-- Grafana --" },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -15,169 +12,212 @@
       }
     ]
   },
+
   "editable": true,
-  "fiscalYearStartMonth": 0,
-  "graphTooltip": 0,
-  "id": 25,
-  "links": [],
-  "liveNow": false,
-  "panels": [
-    {
-      "datasource": {
-        "type": "hadesarchitect-cassandra-datasource",
-        "uid": "Yc87Z6OJ4wsv"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "series",
-            "axisLabel": "Count sentiment (0 & 1)",
-            "axisPlacement": "auto",
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "lineInterpolation": "smooth",
-            "lineWidth": 2,
-            "pointSize": 4,
-            "spanNulls": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 12,
-        "w": 24,
-        "x": 0,
-        "y": 0
-      },
-      "id": 1,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "hadesarchitect-cassandra-datasource",
-            "uid": "Yc87Z6OJ4wsv"
-          },
-          "queryType": "query",
-          "rawQuery": true,
-          "refId": "A",
-          "target": "SELECT subreddit, api_timestamp, sentiment_score FROM reddit.comments WHERE sentiment_score IN (0,1) AND subreddit IN ('AskReddit','funny','gaming','aww','worldnews') AND api_timestamp > $__timeFrom AND api_timestamp < $__timeTo ALLOW FILTERING;"
-        }
-      ],
-      "title": "Top Subreddits – Sentiment Count (0 & 1)",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "hadesarchitect-cassandra-datasource",
-        "uid": "Yc87Z6OJ4wsv"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "series",
-            "axisLabel": "Count sentiment = 1",
-            "axisPlacement": "auto",
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "lineInterpolation": "smooth",
-            "lineWidth": 2,
-            "pointSize": 4,
-            "spanNulls": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 12,
-        "w": 24,
-        "x": 0,
-        "y": 12
-      },
-      "id": 2,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "hadesarchitect-cassandra-datasource",
-            "uid": "Yc87Z6OJ4wsv"
-          },
-          "queryType": "query",
-          "rawQuery": true,
-          "refId": "B",
-          "target": "SELECT subreddit, api_timestamp, sentiment_score FROM reddit.comments WHERE sentiment_score = 1 AND subreddit IN ('China','india','usa','unitedkingdom','australia') AND api_timestamp > $__timeFrom AND api_timestamp < $__timeTo ALLOW FILTERING;"
-        }
-      ],
-      "title": "Countries – Sentiment Count (1)",
-      "type": "timeseries"
-    }
-  ],
-  "refresh": "5s",
+  "id": null,
   "schemaVersion": 38,
   "style": "dark",
-  "tags": [],
-  "templating": {
-    "list": []
-  },
-  "time": {
-    "from": "now-6h",
-    "to": "now"
-  },
-  "timepicker": {},
-  "timezone": "",
-  "title": "Subreddit Sentiment – Count (0 & 1)",
-  "uid": "sentiment-counts",
-  "version": 1,
-  "weekStart": ""
+  "title": "Sentiment Timeline (0 & 1) – Top Subreddits",
+  "refresh": "5s",
+  "time": { "from": "now-6h", "to": "now" },
+  "uid": "sentiment-timeline-all",
+  "version": 3,
+
+  "panels": [
+    {
+      "id": 1,
+      "type": "timeseries",
+      "title": "Sentiment Timeline (0 & 1) – AskReddit / funny / gaming / aww / worldnews",
+      "datasource": {
+        "type": "hadesarchitect-cassandra-datasource",
+        "uid": "Yc87Z6OJ4wsv"
+      },
+
+      "gridPos": { "h": 16, "w": 24, "x": 0, "y": 0 },
+
+      "targets": [
+        {
+          "refId": "A",
+          "queryType": "query",
+          "rawQuery": true,
+          "keyspace": "reddit",
+          "table": "comments",
+          "target": "SELECT subreddit, api_timestamp, sentiment_score FROM reddit.comments WHERE subreddit IN ('AskReddit','funny','gaming','aww','worldnews') AND api_timestamp >= $__timeFrom AND api_timestamp <= $__timeTo ALLOW FILTERING;"
+        }
+      ],
+
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom" },
+        "tooltip": { "mode": "multi" },
+        "showPoints": "auto",
+        "spanNulls": false
+      }
+    },
+    {
+      "id": 2,
+      "type": "timeseries",
+      "title": "Sentiment Timeline (0 & 1) – AskReddit / funny / gaming / aww / worldnews",
+      "datasource": {
+        "type": "hadesarchitect-cassandra-datasource",
+        "uid": "Yc87Z6OJ4wsv"
+      },
+
+      "gridPos": { "h": 16, "w": 24, "x": 0, "y": 0 },
+
+      "targets": [
+        {
+          "refId": "A",
+          "queryType": "query",
+          "rawQuery": true,
+          "keyspace": "reddit",
+          "table": "comments",
+          "target": "SELECT subreddit, api_timestamp, sentiment_score FROM reddit.comments WHERE subreddit IN ('india','usa','unitedkingdom','australia','russia','China') AND api_timestamp >= $__timeFrom AND api_timestamp <= $__timeTo ALLOW FILTERING;"
+        }
+      ],
+
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom" },
+        "tooltip": { "mode": "multi" },
+        "showPoints": "auto",
+        "spanNulls": false
+      }
+    },
+    {
+      "id": 3,
+      "type": "barchart",
+      "title": "Positive vs Negative – Top Subreddits (Stacked)",
+      "datasource": { "type": "hadesarchitect-cassandra-datasource", "uid": "Yc87Z6OJ4wsv" },
+      "gridPos": { "h": 20, "w": 12, "x": 0, "y": 0 },
+      "targets": [
+        { "refId": "A1", "queryType": "query", "rawQuery": true, "keyspace": "reddit", "table": "comments",
+          "target": "SELECT subreddit, COUNT(*) AS negative_count FROM reddit.comments WHERE subreddit = 'AskReddit' AND sentiment_score = 0 ALLOW FILTERING;" },
+        { "refId": "A2", "queryType": "query", "rawQuery": true, "keyspace": "reddit", "table": "comments",
+          "target": "SELECT subreddit, COUNT(*) AS positive_count FROM reddit.comments WHERE subreddit = 'AskReddit' AND sentiment_score = 1 ALLOW FILTERING;" },
+
+        { "refId": "B1", "rawQuery": true, "keyspace": "reddit", "table": "comments",
+          "queryType": "query",
+          "target": "SELECT subreddit, COUNT(*) AS negative_count FROM reddit.comments WHERE subreddit = 'funny' AND sentiment_score = 0 ALLOW FILTERING;" },
+        { "refId": "B2", "rawQuery": true, "keyspace": "reddit", "table": "comments",
+          "queryType": "query",
+          "target": "SELECT subreddit, COUNT(*) AS positive_count FROM reddit.comments WHERE subreddit = 'funny' AND sentiment_score = 1 ALLOW FILTERING;" },
+
+        { "refId": "C1", "rawQuery": true, "keyspace": "reddit", "table": "comments",
+          "queryType": "query",
+          "target": "SELECT subreddit, COUNT(*) AS negative_count FROM reddit.comments WHERE subreddit = 'gaming' AND sentiment_score = 0 ALLOW FILTERING;" },
+        { "refId": "C2", "rawQuery": true, "keyspace": "reddit", "table": "comments",
+          "queryType": "query",
+          "target": "SELECT subreddit, COUNT(*) AS positive_count FROM reddit.comments WHERE subreddit = 'gaming' AND sentiment_score = 1 ALLOW FILTERING;" },
+
+        { "refId": "D1", "rawQuery": true, "keyspace": "reddit", "table": "comments",
+          "queryType": "query",
+          "target": "SELECT subreddit, COUNT(*) AS negative_count FROM reddit.comments WHERE subreddit = 'aww' AND sentiment_score = 0 ALLOW FILTERING;" },
+        { "refId": "D2", "rawQuery": true, "keyspace": "reddit", "table": "comments",
+          "queryType": "query",
+          "target": "SELECT subreddit, COUNT(*) AS positive_count FROM reddit.comments WHERE subreddit = 'aww' AND sentiment_score = 1 ALLOW FILTERING;" },
+
+        { "refId": "E1", "rawQuery": true, "keyspace": "reddit", "table": "comments",
+          "queryType": "query",
+          "target": "SELECT subreddit, COUNT(*) AS negative_count FROM reddit.comments WHERE subreddit = 'worldnews' AND sentiment_score = 0 ALLOW FILTERING;" },
+        { "refId": "E2", "rawQuery": true, "keyspace": "reddit", "table": "comments",
+          "queryType": "query",
+          "target": "SELECT subreddit, COUNT(*) AS positive_count FROM reddit.comments WHERE subreddit = 'worldnews' AND sentiment_score = 1 ALLOW FILTERING;" }
+      ],
+      "transformations": [
+        { "id": "joinByField", "options": { "byField": "subreddit" } }
+      ],
+      "options": {
+        "displayMode": "stacked",
+        "orientation": "vertical",
+        "legend": { "displayMode": "list", "placement": "bottom" },
+        "tooltip": { "mode": "multi" }
+      }
+    },
+
+    {
+      "id": 4,
+      "type": "barchart",
+      "title": "Positive vs Negative – Country Subreddits (Stacked)",
+      "datasource": { "type": "hadesarchitect-cassandra-datasource", "uid": "Yc87Z6OJ4wsv" },
+      "gridPos": { "h": 20, "w": 12, "x": 12, "y": 0 },
+      "targets": [
+        { "refId": "F1", "rawQuery": true, "keyspace": "reddit", "table": "comments",
+          "queryType": "query",
+          "target": "SELECT subreddit, COUNT(*) AS negative_count FROM reddit.comments WHERE subreddit = 'india' AND sentiment_score = 0 ALLOW FILTERING;" },
+        { "refId": "F2", "queryType": "query", "rawQuery": true, "keyspace": "reddit", "table": "comments",
+          "target": "SELECT subreddit, COUNT(*) AS positive_count FROM reddit.comments WHERE subreddit = 'india' AND sentiment_score = 1 ALLOW FILTERING;" },
+
+        { "refId": "G1", "rawQuery": true, "keyspace": "reddit", "table": "comments",
+          "queryType": "query",
+          "target": "SELECT subreddit, COUNT(*) AS negative_count FROM reddit.comments WHERE subreddit = 'usa' AND sentiment_score = 0 ALLOW FILTERING;" },
+        { "refId": "G2", "rawQuery": true, "keyspace": "reddit", "table": "comments",
+          "queryType": "query",
+          "target": "SELECT subreddit, COUNT(*) AS positive_count FROM reddit.comments WHERE subreddit = 'usa' AND sentiment_score = 1 ALLOW FILTERING;" },
+
+        { "refId": "H1", "rawQuery": true, "keyspace": "reddit", "table": "comments",
+          "queryType": "query",
+          "target": "SELECT subreddit, COUNT(*) AS negative_count FROM reddit.comments WHERE subreddit = 'unitedkingdom' AND sentiment_score = 0 ALLOW FILTERING;" },
+        { "refId": "H2", "rawQuery": true, "keyspace": "reddit", "table": "comments",
+          "queryType": "query",
+          "target": "SELECT subreddit, COUNT(*) AS positive_count FROM reddit.comments WHERE subreddit = 'unitedkingdom' AND sentiment_score = 1 ALLOW FILTERING;" },
+
+        { "refId": "I1", "queryType": "query", "rawQuery": true, "keyspace": "reddit", "table": "comments",
+          "target": "SELECT subreddit, COUNT(*) AS negative_count FROM reddit.comments WHERE subreddit = 'australia' AND sentiment_score = 0 ALLOW FILTERING;" },
+        { "refId": "I2", "queryType": "query", "rawQuery": true, "keyspace": "reddit", "table": "comments",
+          "target": "SELECT subreddit, COUNT(*) AS positive_count FROM reddit.comments WHERE subreddit = 'australia' AND sentiment_score = 1 ALLOW FILTERING;" },
+
+        { "refId": "J1", "queryType": "query", "rawQuery": true, "keyspace": "reddit", "table": "comments",
+          "target": "SELECT subreddit, COUNT(*) AS negative_count FROM reddit.comments WHERE subreddit = 'russia' AND sentiment_score = 0 ALLOW FILTERING;" },
+        { "refId": "J2", "queryType": "query", "rawQuery": true, "keyspace": "reddit", "table": "comments",
+          "target": "SELECT subreddit, COUNT(*) AS positive_count FROM reddit.comments WHERE subreddit = 'russia' AND sentiment_score = 1 ALLOW FILTERING;" },
+
+        { "refId": "K1", "queryType": "query", "rawQuery": true, "keyspace": "reddit", "table": "comments",
+          "target": "SELECT subreddit, COUNT(*) AS negative_count FROM reddit.comments WHERE subreddit = 'China' AND sentiment_score = 0 ALLOW FILTERING;" },
+        { "refId": "K2", "queryType": "query", "rawQuery": true, "keyspace": "reddit", "table": "comments",
+          "target": "SELECT subreddit, COUNT(*) AS positive_count FROM reddit.comments WHERE subreddit = 'China' AND sentiment_score = 1 ALLOW FILTERING;" }
+      ],
+      "transformations": [
+        { "id": "joinByField", "options": { "byField": "subreddit" } }
+      ],
+      "options": {
+        "displayMode": "stacked",
+        "orientation": "vertical",
+        "legend": { "displayMode": "list", "placement": "bottom" },
+        "tooltip": { "mode": "multi" }
+      }
+    },
+    {
+      "id": 5,
+      "type": "piechart",
+      "title": "Comment Count – Top Subreddits (Pie)",
+      "datasource": { "type": "hadesarchitect-cassandra-datasource", "uid": "Yc87Z6OJ4wsv" },
+      "gridPos": { "h": 12, "w": 12, "x": 0, "y": 20 },
+      "targets": [
+        {
+          "refId": "A",
+          "queryType": "query",
+          "rawQuery": true,
+          "keyspace": "reddit",
+          "table": "comments",
+          "target": "SELECT subreddit, COUNT(*) AS comment_count FROM reddit.comments WHERE subreddit IN ('AskReddit','funny','gaming','aww','worldnews') GROUP BY subreddit;"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "type": "piechart",
+      "title": "Comment Count – Country Subreddits (Pie)",
+      "datasource": { "type": "hadesarchitect-cassandra-datasource", "uid": "Yc87Z6OJ4wsv" },
+      "gridPos": { "h": 12, "w": 12, "x": 12, "y": 20 },
+      "targets": [
+        {
+          "refId": "B",
+          "queryType": "query",
+          "rawQuery": true,
+          "keyspace": "reddit",
+          "table": "comments",
+          "target": "SELECT subreddit, COUNT(*) AS comment_count FROM reddit.comments WHERE subreddit IN ('india','usa','unitedkingdom','australia','russia','China') GROUP BY subreddit;"
+        }
+      ]
+    }
+  ]
 }
